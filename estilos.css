@@ -1,1 +1,62 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ffeaf6;
+  margin: 0;
+  padding: 2rem;
+  color: #333;
+}
 
+h1 {
+  text-align: center;
+  color: #d63384;
+}
+
+#malla-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.semestre {
+  background-color: #fce4ec;
+  border: 2px solid #f06292;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+}
+
+.semestre h2 {
+  color: #ad1457;
+  text-align: center;
+}
+
+.ramo {
+  background-color: #fff;
+  border: 2px solid #f06292;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+  font-weight: bold;
+}
+
+.ramo.locked {
+  background-color: #f8bbd0;
+  color: #999;
+  cursor: not-allowed;
+  border-style: dashed;
+}
+
+.ramo.unlocked:hover {
+  background-color: #f06292;
+  color: white;
+}
+
+.ramo.approved {
+  background-color: #d63384;
+  color: white;
+  border: 2px solid #ad1457;
+}
