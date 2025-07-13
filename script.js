@@ -75,7 +75,25 @@ const ramos = [
 
 const estadoRamos = {};
 
+function todosPrerrequisitosAprobados(ramo) {
+  // Encuentra los ramos que abren este ramo (sus prerrequisitos)
+  const prerrequisitos = ramos.filter(r => r.abre.includes(ramo.nombre)).map(r => r.nombre);
+  // Verifica que todos estén aprobados
+  return prerrequisitos.every(prerreq => estadoRamos[prerreq]?.aprobado);
+}
+
+function inicializarEstado() {
+  ramos.forEach(ramo => {
+    // Se desbloquea si no tiene prerrequisitos o si todos sus prerrequisitos están aprobados
+    const prerrequisitos = ramos.filter(r => r.abre.includes(ramo.nombre)).map(r => r.nombre);
+    const desbloqueado = prerrequisitos.length === 0;
+    estadoRamos[ramo.nombre] = { aprobado: false, desbloqueado };
+  });
+}
+
 function crearMalla() {
+  inicializarEstado();
+
   const mallaContainer = document.getElementById("malla-container");
   mallaContainer.innerHTML = "";
   const semestres = {};
@@ -83,19 +101,6 @@ function crearMalla() {
   ramos.forEach(ramo => {
     if (!semestres[ramo.semestre]) semestres[ramo.semestre] = [];
     semestres[ramo.semestre].push(ramo);
-
-    if (!(ramo.nombre in estadoRamos)) {
-      if (
-        ramo.nombre === "Química transformadora" ||
-        ramo.nombre === "Inglés V" ||
-        ramo.nombre === "Gestión de Calidad" ||
-        ramo.semestre === 1
-      ) {
-        estadoRamos[ramo.nombre] = { aprobado: false, desbloqueado: true };
-      } else {
-        estadoRamos[ramo.nombre] = { aprobado: false, desbloqueado: false };
-      }
-    }
   });
 
   for (const [semestre, ramosSemestre] of Object.entries(semestres)) {
@@ -124,8 +129,13 @@ function crearMalla() {
         estadoRamos[ramo.nombre].aprobado = true;
         boton.classList.add("approved");
 
-        ramos.filter(r => ramo.abre.includes(r.nombre)).forEach(dep => {
-          estadoRamos[dep.nombre].desbloqueado = true;
+        // Actualiza el desbloqueo de los ramos dependientes
+        ramos.forEach(r => {
+          if (!estadoRamos[r.nombre].desbloqueado) {
+            if (todosPrerrequisitosAprobados(r)) {
+              estadoRamos[r.nombre].desbloqueado = true;
+            }
+          }
         });
 
         crearMalla();
