@@ -1,4 +1,3 @@
-// script.js
 const ramos = [
   { nombre: "Química general I", semestre: 1, abre: ["Química general II", "Laboratorio de química general"] },
   { nombre: "Introducción al álgebra y cálculo", semestre: 1, abre: ["Cálculo diferencial e integral", "Física general"] },
@@ -33,6 +32,7 @@ const ramos = [
   { nombre: "Bioquímica", semestre: 5, abre: ["Microbiología", "Farmacología de sistemas I"] },
   { nombre: "Farmacología general", semestre: 5, abre: ["Biofarmacia y farmacocinética", "Farmacoquímica I", "Farmacología de sistemas I"] },
   { nombre: "Gestión de Calidad", semestre: 5, abre: ["Legislación farmacéutica"] },
+  { nombre: "Inglés V", semestre: 5, abre: [] },
 
   { nombre: "Microbiología", semestre: 6, abre: ["Farmacología de sistemas II"] },
   { nombre: "Farmacoquímica I", semestre: 6, abre: ["Farmacoquímica II"] },
@@ -83,11 +83,18 @@ function crearMalla() {
   ramos.forEach(ramo => {
     if (!semestres[ramo.semestre]) semestres[ramo.semestre] = [];
     semestres[ramo.semestre].push(ramo);
+
     if (!(ramo.nombre in estadoRamos)) {
-      estadoRamos[ramo.nombre] = {
-        aprobado: false,
-        desbloqueado: ramo.semestre === 1
-      };
+      if (
+        ramo.nombre === "Química transformadora" ||
+        ramo.nombre === "Inglés V" ||
+        ramo.nombre === "Gestión de Calidad" ||
+        ramo.semestre === 1
+      ) {
+        estadoRamos[ramo.nombre] = { aprobado: false, desbloqueado: true };
+      } else {
+        estadoRamos[ramo.nombre] = { aprobado: false, desbloqueado: false };
+      }
     }
   });
 
@@ -117,7 +124,6 @@ function crearMalla() {
         estadoRamos[ramo.nombre].aprobado = true;
         boton.classList.add("approved");
 
-        // Desbloquea los que dependen de este
         ramos.filter(r => ramo.abre.includes(r.nombre)).forEach(dep => {
           estadoRamos[dep.nombre].desbloqueado = true;
         });
