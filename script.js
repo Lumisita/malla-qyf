@@ -148,4 +148,5 @@ function crearMalla() {
   }
 }
 
+InicializarEstado();
 crearMalla();
