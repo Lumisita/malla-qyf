@@ -68,14 +68,17 @@ const estadoRamos = {};
 
 function todosPrerrequisitosAprobados(ramo) {
   const prerrequisitos = ramos.filter(r => r.abre.includes(ramo.nombre)).map(r => r.nombre);
-  return prerrequisitos.every(prerreq => estadoRamos[prerreq]?.aprobado);
+  return prerrequisitos.every(nombre => estadoRamos[nombre]?.aprobado);
 }
 
 function inicializarEstado() {
   ramos.forEach(ramo => {
     const prerrequisitos = ramos.filter(r => r.abre.includes(ramo.nombre)).map(r => r.nombre);
     const desbloqueado = prerrequisitos.length === 0;
-    estadoRamos[ramo.nombre] = { aprobado: false, desbloqueado };
+    estadoRamos[ramo.nombre] = {
+      aprobado: false,
+      desbloqueado: desbloqueado
+    };
   });
 }
 
@@ -94,34 +97,37 @@ function actualizarUIDesbloqueados() {
 }
 
 function crearMalla() {
-  const mallaContainer = document.getElementById("malla-container");
-  mallaContainer.innerHTML = "";
-  const semestres = {};
+  const contenedor = document.getElementById("malla-container");
+  contenedor.innerHTML = "";
 
-  ramos.forEach(ramo => {
-    if (!semestres[ramo.semestre]) semestres[ramo.semestre] = [];
-    semestres[ramo.semestre].push(ramo);
+  const semestres = {};
+  ramos.forEach(r => {
+    if (!semestres[r.semestre]) semestres[r.semestre] = [];
+    semestres[r.semestre].push(r);
   });
 
-  for (const [semestre, ramosSemestre] of Object.entries(semestres)) {
-    const col = document.createElement("div");
-    col.className = "semestre";
-    const title = document.createElement("h2");
-    title.textContent = `Semestre ${semestre}`;
-    col.appendChild(title);
+  Object.keys(semestres).sort((a, b) => a - b).forEach(sem => {
+    const columna = document.createElement("div");
+    columna.className = "semestre";
+    
+    const titulo = document.createElement("h2");
+    titulo.textContent = `Semestre ${sem}`;
+    columna.appendChild(titulo);
 
-    ramosSemestre.forEach(ramo => {
+    semestres[sem].forEach(ramo => {
       const boton = document.createElement("div");
       boton.className = "ramo locked";
       boton.textContent = ramo.nombre;
       boton.setAttribute("data-nombre", ramo.nombre);
 
-      if (estadoRamos[ramo.nombre].desbloqueado) {
+      const estado = estadoRamos[ramo.nombre];
+      if (estado.desbloqueado) {
         boton.classList.remove("locked");
         boton.classList.add("unlocked");
+        boton.style.cursor = "pointer";
       }
 
-      if (estadoRamos[ramo.nombre].aprobado) {
+      if (estado.aprobado) {
         boton.classList.add("approved");
       }
 
@@ -130,15 +136,14 @@ function crearMalla() {
 
         estadoRamos[ramo.nombre].aprobado = true;
         boton.classList.add("approved");
-
         actualizarUIDesbloqueados();
       });
 
-      col.appendChild(boton);
+      columna.appendChild(boton);
     });
 
-    mallaContainer.appendChild(col);
-  }
+    contenedor.appendChild(columna);
+  });
 }
 
 inicializarEstado();
