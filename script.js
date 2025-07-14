@@ -4,7 +4,7 @@ const ramos = [
   { nombre: "Introducción al álgebra y cálculo", semestre: 1, abre: ["Cálculo diferencial e integral", "Física general"] },
   { nombre: "Orientación Farmacéutica", semestre: 1, abre: ["Fundamentos de ciencias farmacéuticas"] },
   { nombre: "Técnicas de laboratorio químico", semestre: 1, abre: ["Laboratorio de química general", "Biología celular"] },
-  { nombre: "Inglés I", semestre: 1, abre: ["Ingles II"] },
+  { nombre: "Inglés I", semestre: 1, abre: ["Inglés II"] },
   { nombre: "Química transformadora", semestre: 2, abre: ["Fundamentos de ciencias farmacéuticas"] },
   { nombre: "Cálculo diferencial e integral", semestre: 2, abre: ["Estadística y análisis de datos"] },
   { nombre: "Física general", semestre: 2, abre: ["Fisicoquímica I", "Fisiología Celular"] },
