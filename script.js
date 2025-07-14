@@ -29,7 +29,6 @@ const ramos = [
   { nombre: "Bioquímica", semestre: 5, abre: ["Microbiología", "Farmacología de sistemas I"] },
   { nombre: "Farmacología general", semestre: 5, abre: ["Biofarmacia y farmacocinética", "Farmacoquímica I", "Farmacología de sistemas I"] },
   { nombre: "Gestión de Calidad", semestre: 5, abre: ["Legislación farmacéutica"] },
-  { nombre: "Inglés V", semestre: 5, abre: [] },
   { nombre: "Microbiología", semestre: 6, abre: ["Farmacología de sistemas II"] },
   { nombre: "Farmacoquímica I", semestre: 6, abre: ["Farmacoquímica II"] },
   { nombre: "Farmacología de sistemas I", semestre: 6, abre: ["Farmacología de sistemas II"] },
