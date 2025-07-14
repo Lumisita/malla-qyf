@@ -12,7 +12,7 @@ const ramos = [
   { nombre: "Laboratorio de química general", semestre: 2, abre: ["Química analítica I", "Laboratorio I de química orgánica"] },
   { nombre: "Biología celular", semestre: 2, abre: ["Fisiología celular"] }, 
   { nombre: "Inglés II", semestre: 2, abre: ["Inglés III"] },
-  { nombre: "Química orgánica I", semestre: 3, abre: ["Química orgánica II"] },
+  { nombre: "Química orgánica I", semestre: 3, abre: ["Química orgánica II", "Fisicoquímica I"] },
   { nombre: "Química analítica I", semestre: 3, abre: ["Laboratorio de análisis químico", "Química analítica II"] },
   { nombre: "Laboratorio I de química orgánica", semestre: 3, abre: [] },
   { nombre: "Estadística y análisis de datos", semestre: 3, abre: ["Estadística farmacéutica", "Laboratorio de análisis químico", "Práctica intermedia"] },
